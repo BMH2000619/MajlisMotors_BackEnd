@@ -29,15 +29,14 @@ We used [Trello](https://trello.com/b/hMj74m0b/basic-board) to design our User S
 
 ### **_Screenshots_**
 
-![Image]()
-![Image]()
+![Image](https://i.imgur.com/99enjkK.jpeg)
 
 ### **_Future Updates_**
 
 - [x] Add User, Car, Brand, Review.
 - [x] Add Sign in, Sign up and Sign out.
 - [x] Add View Profile.
-- [x] Add Create/Edit/Delete
+- [x] Add Create/Edit/Delete Review
 
 ### **_Credits_**
 
