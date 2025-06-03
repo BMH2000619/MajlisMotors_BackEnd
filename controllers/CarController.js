@@ -19,3 +19,13 @@ const GetCarById = async (req, res) => {
     res.status(500).send('Error getting car by ID')
   }
 }
+
+const CreateCar = async (req, res) => {
+  try {
+    const car = await Car.create({ ...req.body })
+    res.status(201).send(car)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error creating car')
+  }
+}
