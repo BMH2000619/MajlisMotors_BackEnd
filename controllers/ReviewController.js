@@ -12,7 +12,7 @@ const GetReview = async (req, res) => {
 const CreateReview = async (req, res) => {
   try {
     const review = await Review.create({ ...req.body })
-    res.send(post)
+    res.send(review)
   } catch (error) {
     throw error
   }
