@@ -7,11 +7,11 @@ const reviewSchema = new Schema(
       required: true
     },
     user_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User'
     },
     car_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Car'
     },
     rating: {
