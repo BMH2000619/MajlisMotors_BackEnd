@@ -41,3 +41,21 @@ const UpdateCar = async (req, res) => {
     res.status(500).send('Error updating car')
   }
 }
+
+const DeleteCar = async (req, res) => {
+  try {
+    await Car.deleteOne({ _id: req.params.car_id })
+    res.send({ msg: 'Car deleted', id: req.params.car_id })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error deleting car')
+  }
+}
+
+module.exports = {
+  GetCars,
+  GetCarById,
+  CreateCar,
+  UpdateCar,
+  DeleteCar
+}
