@@ -51,3 +51,22 @@ const UpdateBrand = async (req, res) => {
     res.status(500).send('Error updating brand')
   }
 }
+
+const DeleteBrand = async (req, res) => {
+  try {
+    await Brand.deleteOne({ _id: req.params.brand_id })
+    res.send({ msg: 'Brand deleted', id: req.params.brand_id })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error deleting brand')
+  }
+}
+
+module.exports = {
+  GetBrands,
+  GetBrandById,
+  GetCarsByBrand,
+  CreateBrand,
+  UpdateBrand,
+  DeleteBrand
+}
