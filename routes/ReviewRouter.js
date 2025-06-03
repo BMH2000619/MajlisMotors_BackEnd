@@ -6,25 +6,25 @@ router.get(
   '/',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.GetPosts
+  controller.GetReview
 )
 router.post(
   '/',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.CreatePost
+  controller.CreateReview
 )
 router.put(
   '/:post_id',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.UpdatePost
+  controller.UpdateReview
 )
 router.delete(
   '/:post_id',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.DeletePost
+  controller.DeleteReview
 )
 
 module.exports = router
