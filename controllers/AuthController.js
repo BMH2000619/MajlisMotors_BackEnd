@@ -1,5 +1,5 @@
-const { User } = require("../models")
-const middleware = require("../middleware")
+const { User } = require('../models')
+const middleware = require('../middleware')
 
 const Register = async (req, res) => {
   try {
@@ -28,6 +28,15 @@ const Register = async (req, res) => {
       passwordDigest
     })
 
+    res.status(200).send({
+      id: user._id,
+      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image
+    })
+
     res.status(200).send(user)
   } catch (error) {
     console.error(error)
@@ -41,6 +50,11 @@ const Login = async (req, res) => {
     const { email, password } = req.body
     // Finds a user by a particular field (in this case, email)
     const user = await User.findOne({ email })
+
+    if (!user) {
+      return res.status(401).send({ status: 'Error', msg: 'User not found' })
+    }
+
     // Checks if the password matches the stored digest
     let matched = await middleware.comparePassword(
       password,
@@ -50,18 +64,18 @@ const Login = async (req, res) => {
     if (matched) {
       let payload = {
         id: user.id,
-        email: user.email,
+        email: user.email
       }
       // Creates our JWT and packages it with our payload to send as a response
       let token = middleware.createToken(payload)
       return res.status(200).send({ user: payload, token })
     }
-    res.status(401).send({ status: "Error", msg: "Unauthorized" })
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {
     console.log(error)
     res
       .status(401)
-      .send({ status: "Error", msg: "An error has occurred logging in!" })
+      .send({ status: 'Error', msg: 'An error has occurred logging in!' })
   }
 }
 
@@ -71,6 +85,11 @@ const UpdatePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body
     // Finds a user by a particular field (in this case, the user's id from the URL param)
     let user = await User.findById(req.params.user_id)
+
+    if (!user) {
+      return res.status(404).send({ status: 'Error', msg: 'User not found' })
+    }
+
     // Checks if the password matches the stored digest
     let matched = await middleware.comparePassword(
       oldPassword,
@@ -86,20 +105,20 @@ const UpdatePassword = async (req, res) => {
       )
       let payload = {
         id: user.id,
-        email: user.email,
+        email: user.email
       }
       return res
         .status(200)
-        .send({ status: "Password Updated!", user: payload })
+        .send({ status: 'Password Updated!', user: payload })
     }
     res
       .status(401)
-      .send({ status: "Error", msg: "Old Password did not match!" })
+      .send({ status: 'Error', msg: 'Old Password did not match!' })
   } catch (error) {
     console.log(error)
     res.status(401).send({
-      status: "Error",
-      msg: "An error has occurred updating password!",
+      status: 'Error',
+      msg: 'An error has occurred updating password!'
     })
   }
 }
@@ -113,5 +132,5 @@ module.exports = {
   Register,
   Login,
   UpdatePassword,
-  CheckSession,
+  CheckSession
 }
