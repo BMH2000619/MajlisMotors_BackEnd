@@ -9,3 +9,53 @@ const GetCars = async (req, res) => {
     res.status(500).send('Error getting cars')
   }
 }
+
+const GetCarById = async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.car_id).populate('brand_id')
+    res.status(200).send(car)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error getting car by ID')
+  }
+}
+
+const CreateCar = async (req, res) => {
+  try {
+    const car = await Car.create({ ...req.body })
+    res.status(201).send(car)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error creating car')
+  }
+}
+
+const UpdateCar = async (req, res) => {
+  try {
+    const car = await Car.findByIdAndUpdate(req.params.car_id, req.body, {
+      new: true
+    })
+    res.status(200).send(car)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error updating car')
+  }
+}
+
+const DeleteCar = async (req, res) => {
+  try {
+    await Car.deleteOne({ _id: req.params.car_id })
+    res.send({ msg: 'Car deleted', id: req.params.car_id })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error deleting car')
+  }
+}
+
+module.exports = {
+  GetCars,
+  GetCarById,
+  CreateCar,
+  UpdateCar,
+  DeleteCar
+}
