@@ -29,3 +29,13 @@ const GetCarsByBrand = async (req, res) => {
     res.status(500).send('Error getting cars for brand')
   }
 }
+
+const CreateBrand = async (req, res) => {
+  try {
+    const brand = await Brand.create({ ...req.body })
+    res.status(201).send(brand)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error creating brand')
+  }
+}
