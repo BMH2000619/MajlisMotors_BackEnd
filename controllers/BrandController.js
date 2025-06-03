@@ -19,3 +19,13 @@ const GetBrandById = async (req, res) => {
     res.status(500).send('Error getting brand by ID')
   }
 }
+
+const GetCarsByBrand = async (req, res) => {
+  try {
+    const cars = await Car.find({ brand_id: req.params.brand_id })
+    res.status(200).send(cars)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error getting cars for brand')
+  }
+}
