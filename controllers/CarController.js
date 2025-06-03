@@ -29,3 +29,15 @@ const CreateCar = async (req, res) => {
     res.status(500).send('Error creating car')
   }
 }
+
+const UpdateCar = async (req, res) => {
+  try {
+    const car = await Car.findByIdAndUpdate(req.params.car_id, req.body, {
+      new: true
+    })
+    res.status(200).send(car)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error updating car')
+  }
+}
