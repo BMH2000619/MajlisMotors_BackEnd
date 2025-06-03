@@ -11,7 +11,7 @@ const brandSchema = new Schema(
       required: true
     },
     founded: {
-      type: Date,
+      type: Number,
       required: true
     },
     description: {

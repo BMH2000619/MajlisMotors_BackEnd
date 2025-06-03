@@ -15,7 +15,10 @@ const reviewSchema = new Schema(
       ref: 'Car'
     },
     rating: {
-      type: Number
+      type: Number,
+      required: true,
+      min: 1,
+      max: 10,
     }
   },
   { timestamps: true }

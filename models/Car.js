@@ -26,10 +26,10 @@ const carSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Brand'
     },
-    favorites: {
+    favoritedBy: [{
       type: Schema.Types.ObjectId,
       ref: 'User'
-    }
+    }]
   },
   { timestamps: true }
 )
