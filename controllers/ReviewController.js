@@ -1,20 +1,32 @@
-const { Review } = require('../models')
+const { Review, Car, User } = require('../models')
 
+// Get all reviews (optionally populate user and car details)
 const GetReview = async (req, res) => {
   try {
     const reviews = await Review.find({})
+      .populate('user_id', 'name email image')
+      .populate('car_id', 'name year image')
     res.status(200).send(reviews)
   } catch (error) {
-    throw error
+    console.error(error)
+    res.status(500).send({ status: 'Error', msg: 'Failed to fetch reviews' })
   }
 }
 
+// Create a review
 const CreateReview = async (req, res) => {
   try {
-    const review = await Review.create({ ...req.body })
-    res.send(review)
+    const { content, user_id, car_id, rating } = req.body
+
+    if (!content || !user_id || !car_id || rating === undefined) {
+      return res.status(400).send({ error: 'Missing required fields' })
+    }
+
+    const review = await Review.create({ content, user_id, car_id, rating })
+    res.status(201).send(review)
   } catch (error) {
-    throw error
+    console.error(error)
+    res.status(500).send({ status: 'Error', msg: 'Failed to create review' })
   }
 }
 
