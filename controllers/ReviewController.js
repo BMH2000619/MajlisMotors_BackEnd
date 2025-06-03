@@ -30,23 +30,41 @@ const CreateReview = async (req, res) => {
   }
 }
 
+// Update a review
 const UpdateReview = async (req, res) => {
   try {
-    const review = await Review.findByIdAndUpdate(req.params.post_id, req.body, {
+    const { post_id } = req.params
+    const updated = await Review.findByIdAndUpdate(post_id, req.body, {
       new: true
     })
-    res.send(review)
+
+    if (!updated) {
+      return res.status(404).send({ msg: 'Review not found' })
+    }
+
+    res.status(200).send(updated)
   } catch (error) {
-    throw error
+    console.error(error)
+    res.status(500).send({ status: 'Error', msg: 'Failed to update review' })
   }
 }
 
+// Delete a review
 const DeleteReview = async (req, res) => {
   try {
-    await Review.deleteOne({ _id: req.params.post_id })
-    res.send({ msg: 'Review Deleted', payload: req.params.post_id, status: 'Ok' })
+    const { post_id } = req.params
+    const deleted = await Review.findByIdAndDelete(post_id)
+
+    if (!deleted) {
+      return res.status(404).send({ msg: 'Review not found' })
+    }
+
+    res
+      .status(200)
+      .send({ msg: 'Review Deleted', payload: post_id, status: 'Ok' })
   } catch (error) {
-    throw error
+    console.error(error)
+    res.status(500).send({ status: 'Error', msg: 'Failed to delete review' })
   }
 }
 
@@ -54,5 +72,5 @@ module.exports = {
   GetReview,
   CreateReview,
   UpdateReview,
-  DeleteReview,
+  DeleteReview
 }
