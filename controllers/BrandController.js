@@ -1,4 +1,7 @@
 const { Brand, Car } = require('../models')
+const mongoose = require('mongoose')
+
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
 
 const GetBrands = async (req, res) => {
   try {
@@ -12,7 +15,14 @@ const GetBrands = async (req, res) => {
 
 const GetBrandById = async (req, res) => {
   try {
-    const brand = await Brand.findById(req.params.brand_id)
+    const { brand_id } = req.params
+    if (!isValidObjectId(brand_id)) {
+      return res.status(400).send('Invalid brand ID')
+    }
+    const brand = await Brand.findById(brand_id)
+    if (!brand) {
+      return res.status(404).send('Brand not found')
+    }
     res.status(200).send(brand)
   } catch (error) {
     console.error(error)
@@ -22,7 +32,11 @@ const GetBrandById = async (req, res) => {
 
 const GetCarsByBrand = async (req, res) => {
   try {
-    const cars = await Car.find({ brand_id: req.params.brand_id })
+    const { brand_id } = req.params
+    if (!isValidObjectId(brand_id)) {
+      return res.status(400).send('Invalid brand ID')
+    }
+    const cars = await Car.find({ brand_id })
     res.status(200).send(cars)
   } catch (error) {
     console.error(error)
@@ -32,7 +46,17 @@ const GetCarsByBrand = async (req, res) => {
 
 const CreateBrand = async (req, res) => {
   try {
-    const brand = await Brand.create({ ...req.body })
+    const { name, country, founded, description, logo } = req.body
+    if (!name || !country || !founded || !description) {
+      return res.status(400).send('Missing required brand fields')
+    }
+    const brand = await Brand.create({
+      name,
+      country,
+      founded,
+      description,
+      logo
+    })
     res.status(201).send(brand)
   } catch (error) {
     console.error(error)
@@ -42,9 +66,16 @@ const CreateBrand = async (req, res) => {
 
 const UpdateBrand = async (req, res) => {
   try {
-    const brand = await Brand.findByIdAndUpdate(req.params.brand_id, req.body, {
+    const { brand_id } = req.params
+    if (!isValidObjectId(brand_id)) {
+      return res.status(400).send('Invalid brand ID')
+    }
+    const brand = await Brand.findByIdAndUpdate(brand_id, req.body, {
       new: true
     })
+    if (!brand) {
+      return res.status(404).send('Brand not found')
+    }
     res.status(200).send(brand)
   } catch (error) {
     console.error(error)
@@ -54,8 +85,15 @@ const UpdateBrand = async (req, res) => {
 
 const DeleteBrand = async (req, res) => {
   try {
-    await Brand.deleteOne({ _id: req.params.brand_id })
-    res.send({ msg: 'Brand deleted', id: req.params.brand_id })
+    const { brand_id } = req.params
+    if (!isValidObjectId(brand_id)) {
+      return res.status(400).send('Invalid brand ID')
+    }
+    const deleted = await Brand.findByIdAndDelete(brand_id)
+    if (!deleted) {
+      return res.status(404).send('Brand not found')
+    }
+    res.send({ msg: 'Brand deleted', id: brand_id })
   } catch (error) {
     console.error(error)
     res.status(500).send('Error deleting brand')

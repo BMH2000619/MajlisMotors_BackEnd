@@ -2,13 +2,15 @@ const router = require('express').Router()
 const controller = require('../controllers/ReviewController')
 const middleware = require('../middleware')
 
-// Get all reviews (optionally could add query params like ?car_id=xyz)
-router.get('/', controller.GetAllReviews)
+// Get all reviews
+router.get(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetReview
+)
 
-// Get a single review by ID
-router.get('/:review_id', controller.GetReviewById)
-
-// Create a new review (requires authentication)
+// Create a new review (user_id comes from token)
 router.post(
   '/',
   middleware.stripToken,
@@ -16,7 +18,7 @@ router.post(
   controller.CreateReview
 )
 
-// Update a review by ID (requires authentication)
+// Update a review
 router.put(
   '/:review_id',
   middleware.stripToken,
@@ -24,7 +26,7 @@ router.put(
   controller.UpdateReview
 )
 
-// Delete a review by ID (requires authentication)
+// Delete a review
 router.delete(
   '/:review_id',
   middleware.stripToken,
