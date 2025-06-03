@@ -23,3 +23,17 @@ const Register = async (req, res) => {
     throw error
   }
 }
+
+const Login = async (req, res) => {
+  try {
+    // Extracts the necessary fields from the request body
+    const { email, password } = req.body
+    // Finds a user by a particular field (in this case, email)
+    const user = await User.findOne({ email })
+    // Checks if the password matches the stored digest
+    let matched = await middleware.comparePassword(
+      password,
+      user.passwordDigest
+    )
+  }
+}
