@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const userSchema = require('./User')
 const reviewSchema = require('./Review')
+const carSchema = require('./Car')
+const brandSchema = require('./Brand')
 
 const User = mongoose.model('User', userSchema)
 const Review = mongoose.model('Review', reviewSchema)
