@@ -39,3 +39,15 @@ const CreateBrand = async (req, res) => {
     res.status(500).send('Error creating brand')
   }
 }
+
+const UpdateBrand = async (req, res) => {
+  try {
+    const brand = await Brand.findByIdAndUpdate(req.params.brand_id, req.body, {
+      new: true
+    })
+    res.status(200).send(brand)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error updating brand')
+  }
+}
