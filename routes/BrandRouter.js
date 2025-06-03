@@ -23,3 +23,13 @@ router.put(
   middleware.verifyToken,
   controller.UpdateBrand
 )
+
+// DELETE a brand by ID (protected route)
+router.delete(
+  '/:brand_id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.DeleteBrand
+)
+
+module.exports = router
