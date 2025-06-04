@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/auth', AuthRouter)
 app.use('/brands', BrandRouter)
 app.use('/cars', CarRouter)
-app.use('./reviews', ReviewRouter)
+app.use('/reviews', ReviewRouter)
 
 app.use('/', (req, res) => {
   res.send(`Connected!`)
