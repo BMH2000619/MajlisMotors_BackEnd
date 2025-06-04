@@ -1,6 +1,7 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
+const multer = require('multer')
 
 const AuthRouter = require('./routes/AuthRouter')
 const BrandRouter = require('./routes/BrandRouter')

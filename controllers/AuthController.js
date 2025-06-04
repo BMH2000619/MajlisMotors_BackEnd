@@ -1,7 +1,8 @@
 const { User } = require('../models')
 const middleware = require('../middleware')
+const upload = require('../middleware/multer-config')
 
-const Register = async (req, res) => {
+const Register =  async (req, res) => {
   try {
     const { email, password, userName, firstName, lastName, image } = req.body
 
@@ -17,6 +18,11 @@ const Register = async (req, res) => {
         .send('A user with that email has already been registered!')
     }
 
+    let profileImagePath = ''
+    if (req.file) {
+      profileImagePath = req.file.path.replace('public/', '')
+    }
+
     let passwordDigest = await middleware.hashPassword(password)
 
     const user = await User.create({
@@ -24,7 +30,7 @@ const Register = async (req, res) => {
       firstName,
       lastName,
       email,
-      image,
+      image: req.file ? 'uploads/' + req.file.filename : '',
       passwordDigest
     })
 
