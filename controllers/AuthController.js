@@ -2,12 +2,12 @@ const { User } = require('../models')
 const middleware = require('../middleware')
 const upload = require('../middleware/multer-config')
 
-const Register =  async (req, res) => {
+const Register = async (req, res) => {
   try {
-    const { email, password, userName, firstName, lastName, image } = req.body
+    const { email, password, username, firstName, lastName, img } = req.body
 
     // Check for missing fields
-    if (!email || !password || !userName || !firstName || !lastName || !image) {
+    if (!email || !password || !username || !firstName || !lastName) {
       return res.status(400).json({ error: 'Missing required fields' })
     }
 
@@ -26,24 +26,23 @@ const Register =  async (req, res) => {
     let passwordDigest = await middleware.hashPassword(password)
 
     const user = await User.create({
-      userName,
+      username,
       firstName,
       lastName,
       email,
-      image: req.file ? 'uploads/' + req.file.filename : '',
+      img: req.file ? 'uploads/' + req.file.filename : '',
       passwordDigest
     })
 
     res.status(200).send({
       id: user._id,
-      userName: user.userName,
+      username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      image: user.image
+      img: user.img
     })
 
-    res.status(200).send(user)
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error during registration')
