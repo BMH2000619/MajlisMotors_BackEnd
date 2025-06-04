@@ -3,10 +3,10 @@ const middleware = require('../middleware')
 
 const Register = async (req, res) => {
   try {
-    const { email, password, name, firstName, lastName, image } = req.body
+    const { email, password, userName, firstName, lastName, image } = req.body
 
     // Check for missing fields
-    if (!email || !password || !name || !firstName || !lastName || !image) {
+    if (!email || !password || !userName || !firstName || !lastName || !image) {
       return res.status(400).json({ error: 'Missing required fields' })
     }
 
@@ -20,7 +20,7 @@ const Register = async (req, res) => {
     let passwordDigest = await middleware.hashPassword(password)
 
     const user = await User.create({
-      name,
+      userName,
       firstName,
       lastName,
       email,
@@ -30,7 +30,7 @@ const Register = async (req, res) => {
 
     res.status(200).send({
       id: user._id,
-      name: user.name,
+      userName: user.userName,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,

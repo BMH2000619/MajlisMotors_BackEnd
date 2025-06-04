@@ -41,8 +41,8 @@ const GetCarById = async (req, res) => {
 // CREATE a new car
 const CreateCar = async (req, res) => {
   try {
-    const { model, brand_id, year, price, image } = req.body
-    if (!model || !brand_id || !year || !price) {
+    const { name, type, year, description, image, brand_id } = req.body
+    if (!name || !type || !year || !description || !image || !brand_id) {
       return res.status(400).send({ error: 'Missing required fields' })
     }
 
@@ -53,6 +53,7 @@ const CreateCar = async (req, res) => {
     res.status(500).send({ error: 'Failed to create car' })
   }
 }
+
 
 // UPDATE car
 const UpdateCar = async (req, res) => {
