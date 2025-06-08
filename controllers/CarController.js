@@ -38,6 +38,17 @@ const GetCarById = async (req, res) => {
   }
 }
 
+const GetCarsByBrand = async (req, res) => {
+  try {
+    const { brand_id } = req.params
+    const cars = await Car.find({ brand_id }).populate('brand_id', 'name logo')
+    res.status(200).send(cars)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ error: 'Failed to fetch cars by brand' })
+  }
+}
+
 // CREATE a new car
 const CreateCar = async (req, res) => {
   try {
@@ -104,5 +115,6 @@ module.exports = {
   GetCarById,
   CreateCar,
   UpdateCar,
-  DeleteCar
+  DeleteCar,
+  GetCarsByBrand
 }

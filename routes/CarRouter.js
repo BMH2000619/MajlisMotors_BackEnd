@@ -5,6 +5,7 @@ const middleware = require('../middleware')
 // Public routes
 router.get('/', controller.GetCars)
 router.get('/:car_id', controller.GetCarById)
+router.get('/brand/:brand_id', controller.GetCarsByBrand)
 
 // Protected routes (require authentication)
 router.post(
