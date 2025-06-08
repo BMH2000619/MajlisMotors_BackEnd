@@ -8,6 +8,9 @@ router.get('/', controller.GetBrands)
 // GET a single brand by ID
 router.get('/:brand_id', controller.GetBrandById)
 
+// GET cars for a brand → THIS IS THE NEW ROUTE
+router.get('/:brand_id/cars', controller.GetCarsByBrand)
+
 // CREATE a new brand (protected route)
 router.post(
   '/',
