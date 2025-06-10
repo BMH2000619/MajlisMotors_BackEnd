@@ -86,9 +86,28 @@ const DeleteReview = async (req, res) => {
   }
 }
 
+// Get all reviews for a car
+const GetReviewsByCar = async (req, res) => {
+  try {
+    const { car_id } = req.params;
+    if (!isValidObjectId(car_id)) {
+      return res.status(400).send({ error: 'Invalid car ID' });
+    }
+    const reviews = await Review.find({ car_id })
+      .populate('user_id', 'name email image');
+    res.status(200).send(reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ status: 'Error', msg: 'Failed to fetch reviews' });
+  }
+};
+
+
 module.exports = {
   GetReview,
   CreateReview,
   UpdateReview,
-  DeleteReview
+  DeleteReview,
+  GetReviewsByCar
 }
+
