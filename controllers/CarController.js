@@ -25,7 +25,7 @@ const GetCarById = async (req, res) => {
 
     const car = await Car.findById(car_id)
       .populate('brand_id', 'name logo')
-      .populate('favorites', 'name email image')
+      .populate('favoritedBy', 'name email image')
 
     if (!car) {
       return res.status(404).send({ error: 'Car not found' })
@@ -64,7 +64,6 @@ const CreateCar = async (req, res) => {
     res.status(500).send({ error: 'Failed to create car' })
   }
 }
-
 
 // UPDATE car
 const UpdateCar = async (req, res) => {
