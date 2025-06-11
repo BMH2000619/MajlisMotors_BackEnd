@@ -9,7 +9,8 @@ router.put(
   '/update/:user_id',
   middleware.stripToken,
   middleware.verifyToken,
-  controller.UpdatePassword
+  upload.single('img'), // <-- for image upload
+  controller.UpdateProfile // <-- use the new controller
 )
 router.get(
   '/session',
