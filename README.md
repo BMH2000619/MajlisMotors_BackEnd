@@ -22,21 +22,23 @@ A trusted, interactive platform where everyone in the Arab world can talk carsâ€
 - Mongodb
 - Mongoose
 - Node.js
+- CSS
 
 ### **_Getting Started_**
 
-We used [Trello](https://trello.com/b/hMj74m0b/basic-board) to design our User Scenarios, and [LucidCharts](https://lucid.app/lucidchart/f1855e81-bb70-4c09-bec9-9ca47d3a4310/edit?viewport_loc=48%2C-219%2C2410%2C1155%2C0_0&invitationId=inv_05e55937-5703-43cf-ae3d-bc03b699cc98) to plan our ERD's and Schemas of the project of MongoMart.
+We used [Trello](https://trello.com/b/hMj74m0b/basic-board) to design our User Scenarios, and [LucidCharts](https://lucid.app/lucidchart/f1855e81-bb70-4c09-bec9-9ca47d3a4310/edit?viewport_loc=48%2C-219%2C2410%2C1155%2C0_0&invitationId=inv_05e55937-5703-43cf-ae3d-bc03b699cc98) to plan our ERD's and Schemas of the project of MajlisMotors.
 
 ### **_Screenshots_**
 
 ![Image](https://i.imgur.com/99enjkK.jpeg)
+![Image](https://i.imgur.com/WNoz3bV.png)
 
 ### **_Future Updates_**
 
-- [x] Add User, Car, Brand, Review.
-- [x] Add Sign in, Sign up and Sign out.
-- [x] Add View Profile.
-- [x] Add Create/Edit/Delete Review
+-  Add 2 Users, Admin and Verifed Users.
+-  Admin and Verified Users that can Add Cars.
+-  Admin can write/delete any comments.
+-  Admin can add Brands.
 
 ### **_Credits_**
 
