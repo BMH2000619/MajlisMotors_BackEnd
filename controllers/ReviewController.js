@@ -24,6 +24,13 @@ const CreateReview = async (req, res) => {
     const user_id = res.locals.payload.id // safer than trusting client
     const { comment, car_id, rating } = req.body
 
+    const existing = await Review.findOne({ user_id, car_id })
+    if (existing) {
+      return res
+        .status(400)
+        .send({ error: 'You have already reviewed this car' })
+    }
+
     if (!comment || !car_id || rating === undefined) {
       return res.status(400).send({ error: 'Missing required fields' })
     }
@@ -48,6 +55,14 @@ const UpdateReview = async (req, res) => {
       return res.status(400).send({ error: 'Invalid review ID' })
     }
 
+    const review = await Review.findById(review_id)
+    if (!review) {
+      return res.status(404).send({ msg: 'Review not found' })
+    }
+    if (review.user_id.toString() !== res.locals.payload.id) {
+      return res.status(403).send({ error: 'Unauthorized' })
+    }
+
     const updated = await Review.findByIdAndUpdate(review_id, req.body, {
       new: true
     })
@@ -69,6 +84,14 @@ const DeleteReview = async (req, res) => {
     const { review_id } = req.params
     if (!isValidObjectId(review_id)) {
       return res.status(400).send({ error: 'Invalid review ID' })
+    }
+
+    const review = await Review.findById(review_id)
+    if (!review) {
+      return res.status(404).send({ msg: 'Review not found' })
+    }
+    if (review.user_id.toString() !== res.locals.payload.id) {
+      return res.status(403).send({ error: 'Unauthorized' })
     }
 
     const deleted = await Review.findByIdAndDelete(review_id)
