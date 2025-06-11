@@ -22,9 +22,9 @@ const GetReview = async (req, res) => {
 const CreateReview = async (req, res) => {
   try {
     const user_id = res.locals.payload.id // safer than trusting client
-    const { content, car_id, rating } = req.body
+    const { comment, car_id, rating } = req.body
 
-    if (!content || !car_id || rating === undefined) {
+    if (!comment || !car_id || rating === undefined) {
       return res.status(400).send({ error: 'Missing required fields' })
     }
 
@@ -32,7 +32,7 @@ const CreateReview = async (req, res) => {
       return res.status(400).send({ error: 'Invalid user or car ID' })
     }
 
-    const review = await Review.create({ content, user_id, car_id, rating })
+    const review = await Review.create({ comment, user_id, car_id, rating })
     res.status(201).send(review)
   } catch (error) {
     console.error(error)

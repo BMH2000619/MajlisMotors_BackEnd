@@ -2,7 +2,7 @@ const { Schema } = require('mongoose')
 
 const reviewSchema = new Schema(
   {
-    content: {
+    comment: {
       type: String,
       required: true
     },
