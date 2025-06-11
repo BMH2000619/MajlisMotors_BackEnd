@@ -8,7 +8,7 @@ const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
 const GetReview = async (req, res) => {
   try {
     const reviews = await Review.find({})
-      .populate('user_id', 'name email image')
+      .populate('user_id', 'username firstName lastName email img')
       .populate('car_id', 'name year image')
 
     res.status(200).send(reviews)
@@ -94,7 +94,7 @@ const GetReviewsByCar = async (req, res) => {
       return res.status(400).send({ error: 'Invalid car ID' });
     }
     const reviews = await Review.find({ car_id })
-      .populate('user_id', 'name email image');
+      .populate('user_id', 'username firstName lastName email img');
     res.status(200).send(reviews);
   } catch (error) {
     console.error(error);

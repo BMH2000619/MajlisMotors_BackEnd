@@ -159,9 +159,44 @@ const CheckSession = async (req, res) => {
   }
 }
 
+const UpdateProfile = async (req, res) => {
+  try {
+    const { firstName, lastName } = req.body
+    let updateFields = { firstName, lastName }
+
+    if (req.file) {
+      updateFields.img = 'uploads/' + req.file.filename
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.params.user_id,
+      updateFields,
+      { new: true }
+    )
+
+    if (!user) {
+      return res.status(404).send({ status: 'Error', msg: 'User not found' })
+    }
+
+    res.status(200).send({
+      id: user._id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      img: user.img
+    })
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .send({ status: 'Error', msg: 'An error has occurred updating profile!' })
+  }
+}
+
 module.exports = {
   Register,
   Login,
-  UpdatePassword,
+  UpdateProfile,
   CheckSession
 }
