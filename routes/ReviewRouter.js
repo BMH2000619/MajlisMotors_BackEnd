@@ -10,6 +10,9 @@ router.get(
   controller.GetReview
 )
 
+router.get('/car/:car_id', controller.GetReviewsByCar)
+
+
 // Create a new review (user_id comes from token)
 router.post(
   '/',
