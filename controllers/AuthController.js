@@ -198,5 +198,6 @@ module.exports = {
   Register,
   Login,
   UpdateProfile,
-  CheckSession
+  CheckSession,
+  UpdatePassword
 }
