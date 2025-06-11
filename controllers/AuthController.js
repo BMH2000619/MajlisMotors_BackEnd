@@ -42,7 +42,6 @@ const Register = async (req, res) => {
       email: user.email,
       img: user.img
     })
-
   } catch (error) {
     console.error(error)
     res.status(500).send('Server error during registration')
@@ -71,9 +70,18 @@ const Login = async (req, res) => {
         id: user.id,
         email: user.email
       }
-      // Creates our JWT and packages it with our payload to send as a response
       let token = middleware.createToken(payload)
-      return res.status(200).send({ user: payload, token })
+      return res.status(200).send({
+        token,
+        user: {
+          id: user._id,
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          img: user.img
+        }
+      })
     }
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {
@@ -129,8 +137,26 @@ const UpdatePassword = async (req, res) => {
 }
 
 const CheckSession = async (req, res) => {
-  const { payload } = res.locals
-  res.status(200).send(payload)
+  try {
+    const { payload } = res.locals
+    // Find the full user by id from the payload
+    const user = await User.findById(payload.id)
+    if (!user) {
+      return res.status(404).send({ status: 'Error', msg: 'User not found' })
+    }
+    // Return the full user object (customize fields as needed)
+    res.status(200).send({
+      id: user._id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      img: user.img
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ status: 'Error', msg: 'Session check failed' })
+  }
 }
 
 module.exports = {
