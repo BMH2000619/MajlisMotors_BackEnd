@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 // Utility: Check for valid ObjectId
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
 
-// GET all cars with brand populated
+
 const GetCars = async (req, res) => {
   try {
     const cars = await Car.find().populate('brand_id', 'name logo')
@@ -15,7 +15,7 @@ const GetCars = async (req, res) => {
   }
 }
 
-// GET single car by ID
+
 const GetCarById = async (req, res) => {
   try {
     const { car_id } = req.params
@@ -49,7 +49,7 @@ const GetCarsByBrand = async (req, res) => {
   }
 }
 
-// CREATE a new car
+
 const CreateCar = async (req, res) => {
   try {
     const { name, type, year, description, image, brand_id } = req.body
@@ -65,7 +65,7 @@ const CreateCar = async (req, res) => {
   }
 }
 
-// UPDATE car
+
 const UpdateCar = async (req, res) => {
   try {
     const { car_id } = req.params
@@ -85,7 +85,7 @@ const UpdateCar = async (req, res) => {
   }
 }
 
-// DELETE car
+
 const DeleteCar = async (req, res) => {
   try {
     const { car_id } = req.params

@@ -2,7 +2,6 @@ const router = require('express').Router()
 const controller = require('../controllers/ReviewController')
 const middleware = require('../middleware')
 
-// Get all reviews
 router.get(
   '/',
   middleware.stripToken,
@@ -12,8 +11,6 @@ router.get(
 
 router.get('/car/:car_id', controller.GetReviewsByCar)
 
-
-// Create a new review (user_id comes from token)
 router.post(
   '/',
   middleware.stripToken,
@@ -21,7 +18,6 @@ router.post(
   controller.CreateReview
 )
 
-// Update a review
 router.put(
   '/:review_id',
   middleware.stripToken,
@@ -29,7 +25,7 @@ router.put(
   controller.UpdateReview
 )
 
-// Delete a review
+
 router.delete(
   '/:review_id',
   middleware.stripToken,

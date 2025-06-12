@@ -1,10 +1,10 @@
 const { Review, Car, User } = require('../models')
 const mongoose = require('mongoose')
 
-// Helper
+
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
 
-// Get all reviews
+
 const GetReview = async (req, res) => {
   try {
     const reviews = await Review.find({})
@@ -18,10 +18,10 @@ const GetReview = async (req, res) => {
   }
 }
 
-// Create a review
+
 const CreateReview = async (req, res) => {
   try {
-    const user_id = res.locals.payload.id // safer than trusting client
+    const user_id = res.locals.payload.id 
     const { comment, car_id, rating } = req.body
 
     const existing = await Review.findOne({ user_id, car_id })
@@ -47,7 +47,7 @@ const CreateReview = async (req, res) => {
   }
 }
 
-// Update a review
+
 const UpdateReview = async (req, res) => {
   try {
     const { review_id } = req.params
@@ -78,7 +78,7 @@ const UpdateReview = async (req, res) => {
   }
 }
 
-// Delete a review
+
 const DeleteReview = async (req, res) => {
   try {
     const { review_id } = req.params
@@ -109,7 +109,7 @@ const DeleteReview = async (req, res) => {
   }
 }
 
-// Get all reviews for a car
+
 const GetReviewsByCar = async (req, res) => {
   try {
     const { car_id } = req.params;
